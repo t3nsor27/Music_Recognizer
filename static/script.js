@@ -413,7 +413,7 @@ recordBtn.addEventListener("click", async () => {
 			formData.append('audio', recBlob, filename);
 
 			fetchFromBackend(formData);
-			console.log("FORMDATA", formData);
+			
 
 
 			// Create a download link and remove this when django backend is working
