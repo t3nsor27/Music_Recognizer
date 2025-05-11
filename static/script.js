@@ -329,7 +329,6 @@ async function fetchFromBackend(formData) {
 	})
 		.then(res => res.json())
 		.then(data => {
-			console.log(data);
 
 			const iframe = document.querySelector("#song_iframe");
 			iframe.style.setProperty("display", "block");
@@ -398,11 +397,8 @@ recordBtn.addEventListener("click", async () => {
 		};
 
 		isRecording = true;
-		console.log("Recording Starts...");
-		console.log(isRecording);
 
 		recorder.onstop = async () => {
-			console.log("Recording onstop...");
 			recBlob = new Blob(audioChunk, { type: 'audio/wav' });
 			recUrl = URL.createObjectURL(recBlob);
 			recAudio = new Audio(recUrl);
@@ -434,11 +430,6 @@ recordBtn.addEventListener("click", async () => {
 			currAnalyser = analyser;
 			currStream = stream;
 		}, 1000)
-		console.log("Recording Stopped");
-		console.log(isRecording);
-		console.log(recorder.state);
-		console.log(audioChunk);
-		console.log(recStream.getTracks());
 	}
 });
 
@@ -500,7 +491,7 @@ const startAudioCapture = async () => {
 		const url = URL.createObjectURL(blob);
 
 
-		//Send a AJAX POST request to backend at /playground/upload-audio/
+		//Send a AJAX POST request to backend at /play/upload-audio/
 		const formData = new FormData();
 		const filename = 'audio_recording.wav';
 		formData.append('audio', blob, filename);
@@ -525,7 +516,6 @@ const startAudioCapture = async () => {
 		startBtn.disabled = false;
 		startBtn.style.setProperty('--after-display', 'block');
 		stream.getTracks().forEach(track => track.stop());
-		console.log("STOP");
 	}, 15000);
 
 };
