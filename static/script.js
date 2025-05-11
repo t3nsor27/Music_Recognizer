@@ -105,24 +105,12 @@ let scaledDataArray2 = new Array(range).fill(0);
 let drawVisual1, drawVisual2, drawVisual3, drawVisual4;
 const freqToIdx = (i) => Math.floor(i * (2 * bufferLength / sampleRate));
 const idxToFreq = (i) => Math.floor(i * (sampleRate / (2 * bufferLength)));
-// const logIdx = (i,n) => Math.floor(Math.exp(logMax - logScale*(n-i)));
+
 const logIdx = (i, n) => (bufferLength - logSpread * Math.exp(logScale * i) + logSpread);
 
-// setInterval(() => {
-// 	console.log(dataArray);
-// 	console.log(dataArray2);
-// 	console.log(currStream);
-// 	console.log(currAnalyser);
-// }, 3000);
-
-
-// const canvas = document.querySelector('#visualizer1');
-// WIDTH = canvas.width;
-// HEIGHT = canvas.height;
-// const canvasCtx = canvas.getContext('2d');
 function draw() {
 	drawVisual1 = requestAnimationFrame(draw);
-	//if (!currStream.paused || currStream.active)
+
 	currAnalyser.getByteTimeDomainData(dataArray);
 	// canvasCtx.fillStyle = "rgb(200 200 200)";
 	// canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -225,115 +213,6 @@ function draw2() {
 	// canvasCtx2.stroke();
 }
 
-
-
-
-// const canvas3 = document.querySelector('#visualizer3');
-// WIDTH3=canvas3.width;
-// HEIGHT3=canvas3.height;
-// const canvasCtx3 = canvas3.getContext('2d');
-
-// function draw3() {
-// 	drawVisual3 = requestAnimationFrame(draw3);
-// 	// if(!stream.paused) analyser.getByteFrequencyData(dataArray2);
-// 	canvasCtx3.fillStyle = `${bgcolor}`;
-// 	canvasCtx3.fillRect(0, 0, WIDTH3, HEIGHT3);
-
-
-// 	canvasCtx3.shadowBlur = 15;
-// 	canvasCtx3.lineWidth = 2;
-
-
-// 	const now = Date.now();
-
-
-// 	const r = (v) => {return v*150-1;};
-// 	const g =(v) => {return 0};
-// 	const b = (v) => {return 255-v*100;};
-
-// 	const shadowGlow=20;
-
-// 	const idleAnimation = (i,minRadius, fr) => {
-// 		return minRadius*(1.4+(Math.sin(((i)/fr+(now/5000))*Math.PI*10)))
-// 	};
-
-// 	for (let i = 0; i < frequencyRange; i++) {
-// 		const v = dataArray2[frequencyRange - i] / 128;
-// 		const y = innerRadius + Math.max(v * outerRadius, idleAnimation(i,minRadius,frequencyRange));
-
-// 		canvasCtx3.save();
-// 		canvasCtx3.translate(WIDTH3 / 2, HEIGHT3 / 2);
-// 		canvasCtx3.rotate((i * Math.PI)/ frequencyRange);
-
-// 		canvasCtx3.beginPath();
-// 		canvasCtx3.shadowColor = `rgba(${r(v)+shadowGlow}, ${g(v)+shadowGlow}, ${b(v)+shadowGlow}, 1)`;
-// 		canvasCtx3.moveTo(0, innerRadius);
-// 		canvasCtx3.lineTo(0, y);
-// 		canvasCtx3.strokeStyle = `rgb(${r(v)}, ${g(v)}, ${b(v)})`;
-// 		canvasCtx3.stroke();
-
-// 		canvasCtx3.restore();
-// 	}
-
-// 	for (let i = frequencyRange; i < 2*frequencyRange; i++) {
-// 		const v = dataArray2[i- frequencyRange] / 128;
-// 		const y = innerRadius + Math.max(v * outerRadius, idleAnimation(i,minRadius,frequencyRange));
-
-// 		canvasCtx3.save();
-// 		canvasCtx3.translate(WIDTH3 / 2, HEIGHT3 / 2);
-// 		canvasCtx3.rotate((i * Math.PI) / frequencyRange);
-
-// 		canvasCtx3.beginPath();
-// 		canvasCtx3.shadowColor = `rgba(${r(v)+shadowGlow}, ${g(v)+shadowGlow}, ${b(v)+shadowGlow}, 1)`;
-// 		canvasCtx3.moveTo(0, innerRadius);
-// 		canvasCtx3.lineTo(0, y);
-// 		canvasCtx3.strokeStyle = `rgb(${r(v)}, ${g(v)}, ${b(v)})`;
-// 		canvasCtx3.stroke();
-
-// 		canvasCtx3.restore();
-// 	}
-
-// 	canvasCtx3.lineWidth = 3;
-// 	canvasCtx3.shadowBlur = 25;
-// 	canvasCtx3.strokeStyle = 'rgba(255,255,255, 0.65)';
-// 	canvasCtx3.shadowColor = 'rgb(255,255,255)';
-
-// 	const waveRadius = 128;
-// 	let averageWave = dataArray;
-// 	const waveScale = 5;
-// 	const waveOffset = 100;
-// 	canvasCtx3.beginPath();
-
-// 	for (let i = 0; i < bufferLength; i++) {
-// 		const v = averageWave[i] / 128.0;
-// 		const y = v*waveRadius/waveScale + waveOffset;
-
-// 		canvasCtx3.save();
-// 		canvasCtx3.translate(WIDTH3 / 2, HEIGHT3 / 2);
-// 		canvasCtx3.rotate((i/(bufferLength-1)) *Math.PI*2);
-
-// 		if (i === 0) canvasCtx3.moveTo(0, y);
-// 		else canvasCtx3.lineTo(0, y);
-
-// 		canvasCtx3.restore();
-// 	}
-
-// 	for (let i = 0; i < bufferLength; i++) {
-// 		const v = averageWave[i] / 128.0;
-// 		const y = waveRadius*(2-v)/waveScale + waveOffset;
-// 		canvasCtx3.save();
-// 		canvasCtx3.translate(WIDTH3 / 2, HEIGHT3 / 2);
-// 		canvasCtx3.rotate((i/(bufferLength-1)) *Math.PI*2);
-
-// 		if (i === 0) canvasCtx3.moveTo(0, y);
-// 		else canvasCtx3.lineTo(0, y);
-
-// 		canvasCtx3.restore();
-// 	}
-//   	canvasCtx3.stroke();
-// }
-
-
 const canvas4 = document.querySelector('#visualizer4');
 const canvasCtx4 = canvas4.getContext('2d');
 WIDTH4 = canvas4.width;
@@ -341,7 +220,6 @@ HEIGHT4 = canvas4.width;
 
 function draw4() {
 	drawVisual4 = requestAnimationFrame(draw4);
-	// if(!stream.paused) analyser.getByteFrequencyData(dataArray2);
 	canvasCtx4.fillStyle = `${bgcolor}`;
 	canvasCtx4.fillRect(0, 0, WIDTH4, HEIGHT4);
 
@@ -374,12 +252,8 @@ function draw4() {
 	for (let i = 0; i < 2 * range; i++) {
 		const v = scaledDataArray2[Math.abs(i - range)];
 		const y = innerRadius + Math.max(v * outerRadius, idleAnimation(i, minRadius, range));
-		//const angle=(i*2*Math.PI/ (3*range-1)) + (now/5000);
 		const angle = (i * Math.PI / (2 * range - 1));
 
-		//canvasCtx4.save();
-
-		//canvasCtx4.rotate((i*2*Math.PI/ (3*range-1)) + (now/5000));
 
 		canvasCtx4.beginPath();
 		canvasCtx4.shadowColor = `rgb(${r(v) + shadowGlow}, ${g(v) + shadowGlow}, ${b(v) + shadowGlow})`;
@@ -388,17 +262,11 @@ function draw4() {
 		canvasCtx4.strokeStyle = `rgb(${r(v)}, ${g(v)}, ${b(v)})`;
 		canvasCtx4.stroke();
 
-		//canvasCtx4.restore();
 	}
 	for (let i = 0; i < 2 * range; i++) {
 		const v = scaledDataArray2[Math.abs(i - range)];
 		const y = innerRadius + Math.max(v * outerRadius, idleAnimation(i, minRadius, range));
-		//const angle=(i*2*Math.PI/ (3*range-1)) + (now/5000);
 		const angle = (Math.PI + i * Math.PI / (2 * range - 1));
-
-		//canvasCtx4.save();
-
-		//canvasCtx4.rotate((i*2*Math.PI/ (3*range-1)) + (now/5000));
 
 		canvasCtx4.beginPath();
 		canvasCtx4.shadowColor = `rgb(${r(v) + shadowGlow}, ${g(v) + shadowGlow}, ${b(v) + shadowGlow})`;
@@ -407,45 +275,9 @@ function draw4() {
 		canvasCtx4.strokeStyle = `rgb(${r(v)}, ${g(v)}, ${b(v)})`;
 		canvasCtx4.stroke();
 
-		//canvasCtx4.restore();
 	}
 
 	canvasCtx4.restore();
-
-	// for (let i = 0; i < range; i++) {
-	// 	const v = scaledDataArray2[i];
-	// 	const y = innerRadius + Math.max(v * outerRadius, idleAnimation(i,minRadius,range));
-
-	// 	canvasCtx4.save();
-	// 	canvasCtx4.translate(WIDTH4 / 2, HEIGHT4 / 2);
-	// 	canvasCtx4.rotate(i * 2*Math.PI/ (3*(range-1)) + 2*Math.PI/3);
-
-	// 	canvasCtx4.beginPath();
-	// 	canvasCtx4.shadowColor = `rgb(${r(v)+shadowGlow}, ${g(v)+shadowGlow}, ${b(v)+shadowGlow})`;
-	// 	canvasCtx4.moveTo(0, innerRadius);
-	// 	canvasCtx4.lineTo(0, y);
-	// 	canvasCtx4.strokeStyle = `rgb(${r(v)}, ${g(v)}, ${b(v)})`;
-	// 	canvasCtx4.stroke();
-
-	// 	canvasCtx4.restore();
-	// }
-	// for (let i = 0; i < range; i++) {
-	// 	const v = scaledDataArray2[i];
-	// 	const y = innerRadius + Math.max(v * outerRadius, idleAnimation(i,minRadius,range));
-
-	// 	canvasCtx4.save();
-	// 	canvasCtx4.translate(WIDTH4 / 2, HEIGHT4 / 2);
-	// 	canvasCtx4.rotate(i * 2*Math.PI/ (3*(range-1))  + 4*Math.PI/3);
-
-	// 	canvasCtx4.beginPath();
-	// 	canvasCtx4.shadowColor = `rgb(${r(v)+shadowGlow}, ${g(v)+shadowGlow}, ${b(v)+shadowGlow})`;
-	// 	canvasCtx4.moveTo(0, innerRadius);
-	// 	canvasCtx4.lineTo(0, y);
-	// 	canvasCtx4.strokeStyle = `rgb(${r(v)}, ${g(v)}, ${b(v)})`;
-	// 	canvasCtx4.stroke();
-
-	// 	canvasCtx4.restore();
-	// }
 
 	canvasCtx4.lineWidth = 5;
 	canvasCtx4.shadowBlur = 50;
@@ -465,7 +297,6 @@ function draw4() {
 
 		canvasCtx4.save();
 		canvasCtx4.translate(WIDTH4 / 2, HEIGHT4 / 2);
-		//canvasCtx4.rotate((i/(3*bufferLength-1)) *Math.PI*2 + (now/5000));
 		canvasCtx4.rotate((i / (4 * bufferLength - 1)) * Math.PI * 2);
 
 		if (i === 0) canvasCtx4.moveTo(0, y);
@@ -479,7 +310,6 @@ function draw4() {
 		const y = waveRadius * (2 - v) / waveScale + waveOffset;
 		canvasCtx4.save();
 		canvasCtx4.translate(WIDTH4 / 2, HEIGHT4 / 2);
-		//canvasCtx4.rotate((i/(3*bufferLength-1)) *Math.PI*2 + (now/5000));
 		canvasCtx4.rotate((i / (4 * bufferLength - 1)) * Math.PI * 2);
 
 		if (i === 0) canvasCtx4.moveTo(0, y);
@@ -516,9 +346,6 @@ async function fetchFromBackend(formData) {
 
 			iframe.scrollIntoView({behavior : "smooth"});
 
-			// console.log(song_details);
-			// console.log(song_name);
-			// console.log(song_singer);
 		})
 		.catch(err => console.error('Upload error:', err));
 }
@@ -562,7 +389,6 @@ recordBtn.addEventListener("click", async () => {
 
 		currAnalyser = recAnalyser;
 		currStream = recStream;
-		//['abort','canplay', 'canplaythrough', 'emptied', 'ended', 'error', 'loadeddata', 'loadedmetadata', 'loadstart', 'pause', 'play', 'playing','progress','suspend','waiting']
 
 		recorder.start();
 		recorder.ondataavailable = e => {
@@ -600,7 +426,6 @@ recordBtn.addEventListener("click", async () => {
 
 			recAudio.addEventListener("start", () => console.log("Recording playing starts"));
 			recAudio.addEventListener("ended", () => console.log("Recording playing ended"));
-			//recAudio.play();
 		}
 
 
@@ -608,7 +433,6 @@ recordBtn.addEventListener("click", async () => {
 		recorder.stop();
 		isRecording = false;
 		recStream.getTracks().forEach(track => track.stop());
-		//recorder.requestData();
 		setTimeout(() => {
 			currAnalyser = analyser;
 			currStream = stream;
