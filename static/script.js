@@ -413,6 +413,7 @@ recordBtn.addEventListener("click", async () => {
 			formData.append('audio', recBlob, filename);
 
 			fetchFromBackend(formData);
+			console.log("FORMDATA", formData);
 
 
 			// Create a download link and remove this when django backend is working
@@ -422,10 +423,6 @@ recordBtn.addEventListener("click", async () => {
 			// document.body.appendChild(a);
 			// a.click();
 			// document.body.removeChild(a);
-
-
-			recAudio.addEventListener("start", () => console.log("Recording playing starts"));
-			recAudio.addEventListener("ended", () => console.log("Recording playing ended"));
 		}
 
 
